@@ -8,7 +8,6 @@ using Microsoft.Extensions.Logging;
 namespace Web_Application.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
     public class DemoController : ControllerBase
     {
         private readonly ILogger<DemoController> _logger;
@@ -18,12 +17,13 @@ namespace Web_Application.Controllers
             _logger = logger;
         }
 
-        [HttpGet]
+        [HttpGet("")]
         public Demo Get()
         {
             return new Demo(){
                 Data = "Made by Suyash Khanna"
             };
         }
+
     }
 }
