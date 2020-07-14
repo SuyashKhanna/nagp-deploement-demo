@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using nagp_deployment_demo;
 
 namespace Web_Application.Controllers
 {
@@ -11,18 +12,25 @@ namespace Web_Application.Controllers
     public class DemoController : ControllerBase
     {
         private readonly ILogger<DemoController> _logger;
-
-        public DemoController(ILogger<DemoController> logger)
+        private readonly DemoDbContext _demoDbContext;
+        public DemoController(ILogger<DemoController> logger, DemoDbContext demoDbContext)
         {
             _logger = logger;
+            _demoDbContext = demoDbContext;
         }
 
         [HttpGet("")]
         public Demo Get()
         {
-            return new Demo(){
-                Data = "Made by Suyash Khanna"
-            };
+            try{
+    	    Demo demo = _demoDbContext.Demo.Find(1);
+            return demo;
+            }
+            catch{
+                return new Demo(){
+                    Data = "Unable to fetch data from db"
+                };
+            }
         }
 
     }
